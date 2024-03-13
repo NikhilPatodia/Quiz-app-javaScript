@@ -1,9 +1,11 @@
 //Make Quiz App 
 
 
-
+let score = Number.parseInt(localStorage.getItem("score")) || 0;
 
 let plus = document.querySelector('.score')
+let myScore = document.querySelector('.score');
+myScore.innerHTML = `<p>Your Score is: <span style="font-weight:600">${score}</span></p>`;
 const genrateQuiz = async()=>{
     let txt = "";
     let url = await fetch("https://opentdb.com/api.php?amount=1&type=multiple");
@@ -29,11 +31,13 @@ const genrateQuiz = async()=>{
         div.innerHTML = `<button class="option">${i}</button>`;
         div.querySelector('.option').addEventListener('click', ()=>{
         if(i === correct){
-            
+            score = score + 1;
+            localStorage.setItem("score", score.toString())
             alert("You are win")
             location.reload();
         }else{ 
-           
+            score = 0;
+            localStorage.setItem("score", score.toString());
             alert(`Correct Anwser is ${correct} .So, Wrong anwser Better luck next time!`)
             location.reload()
         }
